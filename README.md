@@ -3,7 +3,7 @@ A script to quickly setup Eduroam WiFi access for Cardiff Metropolitan Universit
 
 ## Instructions for use
 
-Python3 is required, but should be included even in the most basic version of stetch. Download this repository and transfer the file eduroam_setup.py to the Raspberry Pi (should work on any current model). 
+Python3 is required, but should be included even in the most basic version of stretch. Download this repository and transfer the file eduroam_setup.py to the Raspberry Pi (should work on any current model). 
 
 You can transfer with a USB stick, or if you can initially connect with an ethernet cable then you can clone this repo directly to the Raspberry Pi with the CLI command:
 
@@ -21,6 +21,10 @@ Follow the instructions in the script - you will need your Eduroam login credent
 
 Please be aware/assured that your password is hashed securely by the script!
 
-by Aidan Taylor. 2018. Cardiff Metropolitan University.
+---
 
-This code is in the public domain.
+*If you are based at a different University, check to see if your IT department offer a solution for Raspberry Pi access. This code will not work for you because the Eduroam Certificate is unique to this institution - however, you are welcome to modify the script to include the certificate provided to your institution.* 
+
+**by Aidan Taylor. 2018. Cardiff Metropolitan University.**
+
+This code is in the public domain. You are responsible for your use of this script and your use of the Raspberry Pi on the network. 
