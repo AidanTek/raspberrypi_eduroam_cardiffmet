@@ -28,6 +28,8 @@ The following files will be created or modified by this script:
 
 ---
 
+### Notes
+
 *There was initially a change in Raspbian Buster that broke this script, it took me some time too find it, but now there is an option to fix the offending file which is found in /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant - however I am not sure if this fix is still needed. You might also want to fix it manually if you know how, find the line that says*
 ```
 wpa_supplicant_driver="${wpa_supplicant_driver:-wext,nl80211}"
