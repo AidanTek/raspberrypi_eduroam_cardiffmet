@@ -6,6 +6,9 @@ import urllib.request
 import time
 import getpass
 
+def checkinput(s, w):
+    return(' ' + w + ' ') in (' ' + s + ' ')
+
 print('''
 Raspberry Pi Eduroam Setup Tool for Cardiff Metropolitan University
 by Aidan Taylor. 2018.
@@ -126,7 +129,31 @@ with open(os.path.join('/etc/wpa_supplicant', 'wpa_supplicant.conf'), 'r') as f:
 temp.close()
 shutil.move('temp', os.path.join('/etc/wpa_supplicant', 'wpa_supplicant.conf'))
 print('done')
+print()
 
+# Experimental fix for Raspian Buster dhcpd driver ordering:
+choice = ''
+while not checkinput('y', choice) and not checkinput('n', choice):
+    choice = input('Try experimental fix for dhcpcd? (recommended for Raspian Buster, but you might want to do this manually, see README.md) y/n: ')
+    if choice != 'y' or choice != 'n':
+        print('You must type y or n')
+
+if choice == 'y':
+    print('Attempting to fix dhcpcd driver issue...')
+    dhcpcdtemp = open('dhcpcdtemp', 'w')
+
+    with open(os.path.join('/lib/dhcpcd/dhcpcd-hooks/', '10-wpa_supplicant'), 'r') as f:
+        for line in f:
+            if line.strip() == 'wpa_supplicant_driver="${wpa_supplicant_driver:-wext,nl80211}"':
+                print('Found the offending line, correcting it...')
+                dhcpcdtemp.write('\t'+'wpa_supplicant_driver="${wpa_supplicant_driver:-nl80211,wext}"')
+            else:
+                dhcpcdtemp.write(line)
+    dhcpcdtemp.close()
+    shutil.move('dhcpcdtemp', os.path.join('/lib/dhcpcd/dhcpcd-hooks/', '10-wpa_supplicant'))
+    print('Done')
+
+# Restart for changes to take effect:
 print('restarting Pi in...')
 counter = 5
 while counter > 0:
